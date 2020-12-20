@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.bridgelabz.springemployeepayrollapplication.model.EmployeePayrollData;
+import com.bridgelabz.springemployeepayrollapplication.dto.EmployeePayrollDTO;
 
 @RestController
 @RequestMapping("/employeepayroll")
@@ -28,13 +28,13 @@ public class EmployeePayrollController {
 	}
 
 	@PostMapping("/create")
-	public ResponseEntity<String> addEmployeePayrollData(@RequestBody EmployeePayrollData employeePayrollData) {
-		return new ResponseEntity<String>("Created Employee payroll data for:" + employeePayrollData, HttpStatus.OK);
+	public ResponseEntity<String> addEmployeePayrollData(@RequestBody EmployeePayrollDTO employeePayrollDto) {
+		return new ResponseEntity<String>("Created Employee payroll data for:" + employeePayrollDto, HttpStatus.OK);
 	}
 
 	@PutMapping("/update")
-	public ResponseEntity<String> updateEmployeePayrollData(@RequestBody EmployeePayrollData employeePayrollData) {
-		return new ResponseEntity<String>("Updated Employee payroll Data for: " + employeePayrollData, HttpStatus.OK);
+	public ResponseEntity<String> updateEmployeePayrollData(@RequestBody EmployeePayrollDTO employeePayrollDto) {
+		return new ResponseEntity<String>("Updated Employee payroll Data for: " + employeePayrollDto, HttpStatus.OK);
 	}
 
 	@DeleteMapping("/delete/{empId}")
