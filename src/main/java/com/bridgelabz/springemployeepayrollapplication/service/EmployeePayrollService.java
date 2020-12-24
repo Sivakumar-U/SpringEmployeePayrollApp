@@ -20,17 +20,15 @@ public class EmployeePayrollService implements IEmployeePayrollService {
 	@Autowired
 	private EmployeePayrollRepository employeeRepository;
 
-	private List<EmployeePayrollData> employeePayrollList = new ArrayList<>();
-
 	@Override
 	public List<EmployeePayrollData> getEmployeePayrollData() {
-		return employeePayrollList;
+		return employeeRepository.findAll();
 	}
 
 	@Override
 	public EmployeePayrollData getEmployeePayrollDataById(int empId) {
-		return employeePayrollList.stream().filter(empData -> empData.getEmployeeId() == empId).findFirst()
-				.orElseThrow(() -> new EmployeePayrollException("Employee Not Found"));
+		return employeeRepository.findById(empId).orElseThrow(
+				() -> new EmployeePayrollException("Employee with employee id : " + empId + " does not exists "));
 	}
 
 	@Override
@@ -38,7 +36,6 @@ public class EmployeePayrollService implements IEmployeePayrollService {
 		EmployeePayrollData payrollData = null;
 		payrollData = new EmployeePayrollData(employeePayrollDTO);
 		log.debug("Emp Data: " + payrollData.toString());
-		employeePayrollList.add(payrollData);
 		return employeeRepository.save(payrollData);
 	}
 
@@ -54,6 +51,11 @@ public class EmployeePayrollService implements IEmployeePayrollService {
 		EmployeePayrollData payrollData = this.getEmployeePayrollDataById(empId);
 		employeeRepository.delete(payrollData);
 
+	}
+
+	@Override
+	public List<EmployeePayrollData> getEmployeesByDepartment(String department) {
+		return employeeRepository.findEmployeesById(department);
 	}
 
 }
